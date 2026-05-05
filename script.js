@@ -1,8 +1,8 @@
-// 🔥 Firebase Config (PUT YOUR REAL ONE HERE)
+// 🔥 Firebase config (put yours)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
+  projectId: "YOUR_PROJECT"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -11,37 +11,50 @@ const db = firebase.firestore();
 let currentUser = null;
 let allProducts = [];
 
-/* ---------------- SPLASH 10 SECONDS ---------------- */
+/* ---------------- SPLASH ---------------- */
 window.onload = function () {
   setTimeout(() => {
     document.getElementById("splash").style.display = "none";
-  }, 10000); // 10 seconds
+  }, 3000);
 };
 
 /* ---------------- LOGIN ---------------- */
 function login() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
-  firebase.auth().signInWithPopup(provider)
-    .then(res => {
-      currentUser = res.user;
-      alert("Welcome " + currentUser.email);
-    });
+  firebase.auth().signInWithPopup(provider).then(res => {
+    currentUser = res.user;
+    alert("Welcome " + currentUser.email);
+  });
 }
 
-/* ---------------- ADD PRODUCT ---------------- */
-function addProduct() {
+/* ---------------- CLOUDINARY UPLOAD ---------------- */
+function openUploadWidget() {
   if (!currentUser) return alert("Login first");
 
+  cloudinary.openUploadWidget({
+    cloudName: "YOUR_CLOUD_NAME",
+    uploadPreset: "YOUR_UPLOAD_PRESET",
+    sources: ["local", "camera"],
+    multiple: false
+  },
+  (error, result) => {
+    if (!error && result && result.event === "success") {
+      saveProduct(result.info.secure_url);
+    }
+  });
+}
+
+/* ---------------- SAVE PRODUCT ---------------- */
+function saveProduct(imageUrl) {
   const name = prompt("Product name:");
   const price = prompt("Price:");
-  const image = prompt("Image URL:");
-  const category = prompt("Category (phones, fashion, home):");
+  const category = prompt("Category:");
 
   db.collection("products").add({
     name,
     price,
-    image,
+    image: imageUrl,
     category,
     user: currentUser.email
   });
@@ -49,7 +62,7 @@ function addProduct() {
   loadProducts();
 }
 
-/* ---------------- LOAD PRODUCTS ---------------- */
+/* ---------------- LOAD ---------------- */
 function loadProducts() {
   const container = document.getElementById("products");
   const status = document.getElementById("status");
@@ -70,26 +83,24 @@ function loadProducts() {
     snapshot.forEach(doc => {
       const p = doc.data();
       allProducts.push(p);
-      renderProduct(p);
+      render(p);
     });
   });
 }
 
 /* ---------------- RENDER ---------------- */
-function renderProduct(p) {
-  const container = document.getElementById("products");
-
+function render(p) {
   const div = document.createElement("div");
   div.className = "card";
 
   div.innerHTML = `
-    <img src="${p.image || 'https://via.placeholder.com/150'}">
+    <img src="${p.image}">
     <h3>${p.name}</h3>
     <p>₦${p.price}</p>
     <small>${p.category}</small>
   `;
 
-  container.appendChild(div);
+  document.getElementById("products").appendChild(div);
 }
 
 /* ---------------- SEARCH ---------------- */
@@ -101,10 +112,10 @@ function searchProducts() {
   );
 
   document.getElementById("products").innerHTML = "";
-  filtered.forEach(renderProduct);
+  filtered.forEach(render);
 }
 
-/* ---------------- FILTER CATEGORY ---------------- */
+/* ---------------- CATEGORY ---------------- */
 function filterCategory(cat) {
   document.getElementById("products").innerHTML = "";
 
@@ -114,8 +125,7 @@ function filterCategory(cat) {
     filtered = allProducts.filter(p => p.category === cat);
   }
 
-  filtered.forEach(renderProduct);
+  filtered.forEach(render);
 }
 
-/* INIT */
 loadProducts();
