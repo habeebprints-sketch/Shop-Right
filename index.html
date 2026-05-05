@@ -4,37 +4,23 @@
   <meta charset="UTF-8">
   <title>Shop Right</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
 </head>
+
 <body>
 
-<header class="navbar">
-  <h1>Shop Right</h1>
-  <input type="text" placeholder="Search products...">
-  <button onclick="viewCart()">🛒 (<span id="cart-count">0</span>)</button>
+<header>
+  <h1>🛒 Shop Right</h1>
+  <button onclick="login()">Login</button>
+  <button onclick="addProduct()">Post Product</button>
 </header>
 
-<main>
-  <aside class="sidebar">
-    <h3>Categories</h3>
-    <ul>
-      <li>Electronics</li>
-      <li>Fashion</li>
-      <li>Home</li>
-      <li>Phones</li>
-    </ul>
-  </aside>
-
-  <section id="products"></section>
-</main>
-
-<div id="cart-modal" class="hidden">
-  <h2>Your Cart</h2>
-  <ul id="cart-items"></ul>
-  <p>Total: $<span id="total-price">0</span></p>
-  <button onclick="checkout()">Checkout</button>
-  <button onclick="closeCart()">Close</button>
-</div>
+<main id="products"></main>
 
 <script src="script.js"></script>
 </body>
-    </html>
+</html>
