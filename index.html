@@ -5,7 +5,7 @@
   <title>Shop Right</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Firebase CDN -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
@@ -13,12 +13,32 @@
 
 <body>
 
-<header>
-  <h1>🛒 Shop Right</h1>
-  <button onclick="login()">Login</button>
-  <button onclick="addProduct()">Post Product</button>
+<!-- 🔥 SPLASH SCREEN -->
+<div id="splash">🛒 Shop Right</div>
+
+<!-- HEADER -->
+<header class="navbar">
+  <h1>Shop Right</h1>
+
+  <input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()">
+
+  <div>
+    <button onclick="login()">Login</button>
+    <button onclick="addProduct()">Sell</button>
+  </div>
 </header>
 
+<!-- CATEGORIES -->
+<nav class="categories">
+  <button onclick="filterCategory('all')">All</button>
+  <button onclick="filterCategory('phones')">Phones</button>
+  <button onclick="filterCategory('fashion')">Fashion</button>
+  <button onclick="filterCategory('home')">Home</button>
+</nav>
+
+<section id="status">Loading products...</section>
+
+<!-- PRODUCTS -->
 <main id="products"></main>
 
 <script src="script.js"></script>
