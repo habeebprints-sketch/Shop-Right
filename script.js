@@ -1,3 +1,4 @@
+alert("JS is working");
 // 🔥 Firebase config (put yours)
 const firebaseConfig = {
   apiKey: "YOUR_KEY",
