@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop Right</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <h1>Shop Right</h1>
+  <input type="text" placeholder="Search products...">
+  <button onclick="viewCart()">🛒 (<span id="cart-count">0</span>)</button>
+</header>
+
+<main>
+  <aside class="sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li>Electronics</li>
+      <li>Fashion</li>
+      <li>Home</li>
+      <li>Phones</li>
+    </ul>
+  </aside>
+
+  <section id="products"></section>
+</main>
+
+<div id="cart-modal" class="hidden">
+  <h2>Your Cart</h2>
+  <ul id="cart-items"></ul>
+  <p>Total: $<span id="total-price">0</span></p>
+  <button onclick="checkout()">Checkout</button>
+  <button onclick="closeCart()">Close</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+    </html>
