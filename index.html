@@ -9,26 +9,26 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
+  <!-- Cloudinary Upload Widget -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
 </head>
 
 <body>
 
-<!-- 🔥 SPLASH SCREEN -->
 <div id="splash">🛒 Shop Right</div>
 
-<!-- HEADER -->
 <header class="navbar">
   <h1>Shop Right</h1>
 
-  <input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()">
+  <input type="text" id="search" placeholder="Search..." onkeyup="searchProducts()">
 
   <div>
     <button onclick="login()">Login</button>
-    <button onclick="addProduct()">Sell</button>
+    <button onclick="openUploadWidget()">Sell</button>
   </div>
 </header>
 
-<!-- CATEGORIES -->
 <nav class="categories">
   <button onclick="filterCategory('all')">All</button>
   <button onclick="filterCategory('phones')">Phones</button>
@@ -36,9 +36,7 @@
   <button onclick="filterCategory('home')">Home</button>
 </nav>
 
-<section id="status">Loading products...</section>
-
-<!-- PRODUCTS -->
+<section id="status">Loading...</section>
 <main id="products"></main>
 
 <script src="script.js"></script>
